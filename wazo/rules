@@ -1,0 +1,27 @@
+#!/bin/sh
+# Copyright 2023 Wazo Team (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0+
+
+case "$1" in
+    build)
+        ;;
+
+    package)
+        mkdir -p ${pkgdir}/etc/asterisk/extensions_extra.d
+        cp spy.conf ${pkgdir}/etc/asterisk/extensions_extra.d/
+        cp interfaces.py ${pkgdir}/etc/asterisk/extensions_extra.d/
+        ;;
+
+    install)
+        asterisk -x 'dialplan reload'
+        ;;
+
+    uninstall)
+        asterisk -x 'dialplan reload'
+        ;;
+
+    *)
+        echo "$0 called with unknown argument '$1'" >&2
+        exit 1
+    ;;
+esac
